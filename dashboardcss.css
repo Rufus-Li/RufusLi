@@ -5,12 +5,12 @@
 /* style.css file*/
 body {
 	justify-content: center;
-	height: 100%;
-    width:100%;
+	height: 100vh;
     margin:0;
     padding: 0;
 }
-/*----------Top-Header----------*/
+/*
+----------Top-Header----------*/
 .header-content{
     display:flex;
     align-content: center;
@@ -37,7 +37,7 @@ nav {
 }
 .bg {
     animation: slide 3s ease-in-out infinite alternate;
-    background-image: linear-gradient(-60deg,#6c3 0%,rgb(12, 88, 194) 50% ,rgb(255, 183, 0) 100% );
+    background-image: linear-gradient(-60deg,#6c3 0%,rgb(0, 119, 255) 50% ,rgb(255, 183, 0) 100% );
     bottom: 0;
     left: -50%;
     opacity: 0.5;
@@ -66,43 +66,43 @@ nav {
     }
 }
 
-nav,.navbar-brand,
-.top-font{
-    align-items: center;
-    justify-content: center;
-}
-.header-nav{
-    display: flex;
-    float:right;
-}
 .navbar-brand{
     height: 100%;
     width: 50%;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .top-font{
-    display: flex;
     height: 100%;
     width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /*---------------MAIN BODY--------------*/
 .container-fluid{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     height: 70%;
     width: 100%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+.active {
+    background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+    animation: fade ease 2s;
+}
+
 .row{
     display: flex;
     height: 100%;
     padding: 10px 10px 10px 0px;
 }
 
-.left-col,
-.right-col,
-.Home{
-    display: flex;
-}
 .left-col{
+    display: flex;
     height: 90%;
     width: 4rem;
     background-color: #edebe6;
@@ -110,66 +110,33 @@ nav,.navbar-brand,
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
 }
-.right-col{
-    width: 60%;
-    border-radius: 10px;
-    padding: 0 1%;
-}
-.attendance-details{
-    background-color:#edebe6;
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-}
-.at-de-heading,.at-de-dropdown{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.at-de-heading{
-    height: 15%;
-    width: 100%;
-    font-size: 30px;
-}
-.at-de-dropdown{
-    position: relative;
-    min-width: 250px;
-    height: 8%;
-}
-.select-box:hover{
-    transition: .2s;
-    font-size: 20px;
-}
-.select-box,
-.subj,
-.bar{
-    font-family:'Times New Roman', Times, serif;
-    font-style: italic;
-}
-.select-box{
-    transition: .5s;
-    appearance: none;
-    padding: 0 30px 0 15px;
-    width: 80%;
-    height: 100%;
-    color: black;
-    font-size: 15px;
-}
 .navigate{
     padding: 10px 10px 0;
 }
-
 .nav-item{
-    padding-bottom: 10px;
-    a{
-        align-items: center;
-        height: 48px;
-        width: 100%;
-    }   
+    padding-bottom: 10px;   
 }
-#prfle{
-    display: none;
-} 
+
+.nav-item a{
+    align-items: center;
+    height: 48px;
+    width: 100%;
+}
+
+button {
+	padding: 10px 20px;
+	border: 1px solid #b2b2b2;
+	outline: none;
+	border-radius: 0.25em;
+	font-size: 15px;
+	cursor: pointer;
+	background-color: #244b77;
+	transition: 0.3s background-color;
+}
+button:hover {
+    color:black;
+}
+
 .btn-primary{
     display: flex;
     justify-content: center;
@@ -191,58 +158,29 @@ nav,.navbar-brand,
 }
 .btn-primary.active{
     color:  white;
+    margin-left: 10px;
     background-color: #244b77;
     height: 48px;
-    margin-left: 10px;
 }
-
-.show-attendance{
+@keyframes fade {
+    from {opacity:0.5} 
+    to {opacity: 1}
+}
+.middle-body{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.show-attendance{
-    height: 77%;
+.middle-body{
+    height: 90%;
     width: 100%;
+    display: flex;
     .at-box{
         height: 90%;
         width: 90%;
         border-radius:10px
     }
 }
-.subj{
-    height: 20%;
-    margin-top: 5px;
-    .bar{
-        height: 15%;
-        background-color:rgba(72, 70, 70, 0.87);
-        text-align: right;
-    }
-    .bar1{
-        width: 90%;
-        animation: bar-anima 1s;
-    }  
-    .bar2{
-        width: 80%;
-        animation: bar-anima 1s;
-        animation-delay: .1s
-    }  
-    .bar3{
-        width: 70%;
-        animation: bar-anima 1s;
-        animation-delay: .2s
-    }  
-    .bar4{
-        width: 60%;
-        animation: bar-anima 1s;
-        animation-delay: .3s
-    }  
-}
-@keyframes bar-anima {
-    0% {width:0}
-    70% {width: 100%;}
-}
-  
 /*--------------------PROFILE CARD-----------------------*/
 .card {
     position: relative;
@@ -270,11 +208,8 @@ nav,.navbar-brand,
     left: 0;
     width:100%;
     height: 80px;
-    background:#244b77;
+    background:#af0e0e;
     animation: dsTop 1.5s;
-    .cross{
-        visibility: hidden;
-    }
 }
 .avatar-holder {
     position: absolute;
@@ -339,16 +274,22 @@ nav,.navbar-brand,
             padding: .5vw;
         }
     }
+  @keyframes fadeInMove {
+    0% {
+      opacity: 0;
+      left: -300px;
+    }
+    100% {
+      opacity: 1;
+      left: 0;
+    }
+  }
   
-  @keyframes mvRight {
-    0% {float:left;
-        margin-left: 0;}
-    100% {margin-left: 98%;}
+  @keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
   }
-  @keyframes mvLeft{
-    0%{margin-right:0 ;}
-    100% {margin-right: 98%}
-  }
+
   @keyframes mvBottom {
     0% {bottom: -550px;}
     99% {bottom: 0}
@@ -364,6 +305,10 @@ nav,.navbar-brand,
     100% {top: 0;}
   }
   
+  .following {
+    color: white;
+    background: crimson;
+  }
 .edit-details{
     button{
         border: none;
@@ -373,9 +318,9 @@ button {
 	padding: 10px 20px;
 	border: 1px solid #b2b2b2;
 	outline: none;
+	border-radius: 0.25em;
 	font-size: 15px;
 	cursor: pointer;
-	margin-top: 15px;
 	background-color: #244b77;
 	transition: 0.3s background-color;
 }
@@ -413,7 +358,7 @@ button:hover {
     position: fixed;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: rgb(133, 160, 184);
-    height:80%;
+    height:70%;
     width:60%;
     flex-direction: column;
     visibility: hidden;
@@ -426,7 +371,7 @@ button:hover {
 }
 
 #popup-edit-details.active{
-    transform: translate(24vw,-90%);
+    transform: translate(35%,-90%);
     visibility: visible;
     opacity: 1;
     transition: 1s;
@@ -466,69 +411,17 @@ input{
 }
 
 @media only screen and (max-width: 400px) {
-    .right-col{
-        padding: 0 3%;
-        width: 100%;
-    }
-    .ds-top,
-    .avatar-holder,
-    .name{
-        animation: none;
+    body{
+        height: 91vh;
     }
     .card{
-        height: 65%;
         width: 75%;
-        position: fixed;
-        border-radius: 10px;
-        box-shadow: 0 10px 25px 5px rgba(0, 0, 0, 0.2);
-        background: #151515;
-        overflow: hidden;
-        visibility: hidden;
-        transform: translate(-140%,0);
-        transition: 2s;
-    }
-    .card.active{
-            visibility: visible;
-            transform: translate(0,0);
-            transition: 2s;
-            .ds-top{
-                animation: dsTop 1.5s;
-            }
-            .avatar-holder {
-                animation: mvTop 1.5s;
-            }
-            .name{
-                animation: mvBottom 2s;
-            }
-            .cross{
-                animation: mvRight 2s;
-            }
-    }
-    #prfle
-    {
-        display:block;
     }
     #popup-edit-details{
         width: 85%;
+        transform: translate(35%,-100%);
     }
     #popup-edit-details.active{
-        transform: translate(8%,-90%);
+        transform: translate(8%,-100%);
     }
-    .ds-top{
-        .cross{
-            visibility: visible;
-            border: none;
-            float:right;
-            &:hover{
-                color: white;
-            }
-            &:active{
-                .material-symbols-outlined.crs{
-                    font-size: 30px;
-                    transition: 0.1s;
-                }
-            }
-        }
-    }
-    
 }

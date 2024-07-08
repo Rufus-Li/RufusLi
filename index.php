@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Login</title>
 </head>
@@ -20,7 +20,7 @@
             </a>
         </div>
         <nav>
-            QR Code Attendance System Teachers' Login
+            QR Code Attendance System Login
         </nav>
     </div>
     <div class="container" id="blur">
@@ -42,9 +42,11 @@
                     <div class="text"></div>
                 </div>
             </div>
+            <div style="text-align:center;padding: 5rem;opacity:0">
+            </div>
         </div>
 
-        <form class="login-block" action="adminlogin.php" method="POST" autocomplete="on">
+        <form class="login-block" action="login.php" method="POST" autocomplete="on">
             <div class="contents">
                 <div class="upper">
                     <h1>Login</h1>
@@ -66,22 +68,24 @@
                 <div class="buttons">
                     <button type="submit" name="submit" class="btn">Log-in</button>
                     <button type="submit" class="btn sign" onclick="toggle()">Sign-In</button>
+                    <br><a href="admin.php">Not a student?<br>Click here!</a>
                 </div>       
             </div>
         </form>
     </div>
     <div id="popup">
-        <form action="adminsignup.php" method="POST" class="form-container">
+        <form action="signup.php" method="POST" class="form-container">
             <div class="container-1">
                 <div class="upper">
                     <h1>Sign In</h1>
                     <input type="text" placeholder="Enter Email" name="email" required>
                     <input type="Name" name="Name" placeholder="Enter your Full Name" required>
                     <input type="Dept" name="Dept" placeholder="Enter your Department" required>
+                    <input type="Subj" name="Subject" placeholder="Bachelor/Masters in **your subject**" required>
+                    <input type="Reg-No" name="Reg-No" placeholder="Enter your Registration Number" required>
                     <input type="Roll" name="Roll" placeholder="Enter your Roll No." required>
                     <input type="password" placeholder="Enter Password" name="psw" required>
                     <input type="password" placeholder="Renter Password" name="rpsw" required>
-
                 </div>
                 <br>
                 <div class="buttons2">
@@ -180,5 +184,45 @@
         dots[slideIndex-1].className += " active";
         setTimeout(showSlides, 5000); // Change image every 2 seconds 
     }
+
+    var email=document.forms['form']['email'];
+    var password=document.forms['form']['password'];
+    var email_error=document.getElementById('email_error');
+    var pass_error=document.getElementById('pass_error');
+
+    email.addEventListener('textInput', email_Verify);
+    password.addEventListener('textInput', pass_Verify);
+
+    function validated(){
+        if (email.value.length < 9) {
+            email.style.border = "1px solid red";
+            email_error.style.display = "block";
+            email.focus();
+            return false;
+        }
+        if (password.value.length < 6) {
+            password.style.border = "1px solid red";
+            pass_error.style.display = "block";
+            password.focus();
+            return false;
+        }
+
+    }
+    function email_Verify(){
+        if (email.value.length >= 8) {
+            email.style.border = "1px solid silver";
+            email_error.style.display = "none";
+            return true;
+        }
+    }
+    function pass_Verify(){
+        if (password.value.length >= 5) {
+            password.style.border = "1px solid silver";
+            pass_error.style.display = "none";
+            return true;
+        }
+    }
+
+
 </script>
 </html>

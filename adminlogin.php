@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                 // Verify the password
                 if (password_verify($password, $user['password'])) {
                     // Password is correct, redirect to success page or perform other actions
-                    header('Location: success.php');
+                    header('Location: dashboardindex.php');
                     exit();
                 } else {
                     // Password is incorrect

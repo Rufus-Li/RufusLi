@@ -6,6 +6,8 @@ body{
     background-color: #ffff;
     margin:0;
     padding: 0;
+    height: 100%;
+    width: 100%;
 }
 
 /*----------------- HEADER -----------------*/
@@ -34,46 +36,33 @@ nav {
 }
 
 .bg {
-    animation:slide 3s ease-in-out infinite alternate;
-    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
-    bottom:0;
-    left:-50%;
-    opacity:.5;
-     position:fixed;
-    right:-50%;
-    top:0;
-    z-index:-1;
+    animation: slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg,#6c3 0%,rgb(0, 119, 255) 50% ,rgb(255, 183, 0) 100% );
+    bottom: 0;
+    left: -50%;
+    opacity: 1;
+    position: fixed;
+    right: -50%;
+    top: 0;
+    z-index: -1;
     height: 15%;
 }
 
 .bg2 {
-    animation-direction:alternate-reverse;
-    animation-duration:4s;
+    animation-direction: alternate-reverse;
+    animation-duration: 4s;
 }
 
 .bg3 {
-    animation-duration:5s;
-}
-
-.content {
-    background-color:rgba(255,255,255,.8);
-    border-radius:.25em;
-    box-shadow:0 0 .25em rgba(0,0,0,.25);
-    box-sizing:border-box;
-    left:50%;
-    padding:10vmin;
-    position:fixed;
-    text-align:center;
-    top:50%;
-    transform:translate(-50%, -50%);
+    animation-duration: 5s;
 }
 
 @keyframes slide {
     0% {
-        transform:translateX(-25%);
+        transform: translateX(-25%);
     }
     100% {
-        transform:translateX(25%);
+        transform: translateX(25%);
     }
 }
 /* ----------------- MIDDLE-BODY -----------------*/
@@ -83,16 +72,7 @@ nav {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
 }
-.form__message--error{
-    height: 2rem;
-    width: 100%;
-    color: rgb(210, 23, 23);
-    font-size: 1rem;
-    padding: 10px;
-}
-.form__input-error-message{
-    padding: 3px;
-}
+
 .login-block{
     float: right;
     height: 100%;
@@ -167,20 +147,41 @@ nav {
     color: rgb(255, 0, 0);
 }
 /* ----------------POP UP FORM----------------------*/
+h1 {
+    font-size: 2rem;
+    padding: 3px;
+    color: #323334;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
 .container#blur.active{
     filter: blur(20px);
     pointer-events: none;
     user-select: none;
 }
-.upper h1{
-    font-size: 2rem;
-    padding: 3px;
-    color: #323334;
-}
 #popup{
     position: fixed;
     left: 50%;
-    transform: translate(-50%,-50%);
+    height:70%;
+    width:50%;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0,.5);
+    background-color: rgb(192, 219, 243);
+    visibility: hidden;
+    opacity: 0;
+    transition: 1s;
+    transform: translate(51vw,-95%);
+}
+
+#popup.active{
+    left:-29.5%;
+    visibility: visible;
+    opacity: 1;
+    transition: 1s;
+}
+#forgot-password-popup{
+    left: 50%;
+    position: fixed;
     height: 50%;
     width:35%;
     padding: 50px;
@@ -188,26 +189,49 @@ nav {
     background: rgb(192, 219, 243);
     visibility: hidden;
     opacity: 0;
-    transition: 0.8s;
+    transition: 1s;
+    transform: translate(-85vw,-104%);
 }
-
-#popup.active{
-    top: 50%;
+#forgot-password-popup.active{
+    left:116%;
     visibility: visible;
     opacity: 1;
     transition: 1s;
+    height: 50%;
+    width:30vw;
+}
+
+.container-1{
+    .upper{
+        margin-top: 7%;
+    }
+}
+
+.container-2 {
+    height: 36%;
+}
+#forgot-password-popup input{
+    height: 15%;
+    width: 100%;
 }
 .buttons2{
+    margin-top: 8%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+.f-p-p-buttons2{
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /*Full-width input fields*/
-.form-container input[type=text], .form-container input[type=password]{
+.form-container input,
+.form-pass-container input{
     width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
+    padding: 10px;
+    margin: 2px 0 22px 0;
     border: none;
 }
 
@@ -269,11 +293,6 @@ nav {
 @keyframes fade {
     from {opacity:0.5} 
     to {opacity: 1}
-}
-
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-    .text {font-size: 11px}
 }
 
 
@@ -406,3 +425,49 @@ ul li a:hover:nth-child(4) {
 }
 
 
+/* For mobile phones: */
+@media only screen and (max-width: 400px) {
+    body{
+        height: 100%;
+        width: 100%;
+        margin:0;
+    }
+    .header-content{
+        flex-direction: column;
+    }
+    nav{
+        justify-content: center;
+        margin-bottom:-16%;
+        font-size: 20px;
+        text-align: center;
+    }
+    .bg {
+        height: 15%;
+    }
+    .logo-img a img {
+        padding-left: 7%;
+    }
+    .login-block {
+        width: 91%;
+    }
+    .img-slider {
+        display: none;
+        height: 0;
+        width: 0;
+    }
+    .contents {
+        height: 80%;
+    }
+    #popup.active {
+        height: 60%;
+        width:60%;
+        left: -44%;
+    }
+    .buttons2{
+        margin-top: 20%;
+    }
+    #forgot-password-popup.active{
+        left: 87%;
+        width: 70%;
+    }
+}

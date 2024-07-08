@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the database connection file
 include('connection.php');
 
@@ -21,11 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         // Retrieve email and password from the form
         $email = $_POST['email'];
         $password = $_POST['password'];
-
         // Check if email is in a valid format
         if (filter_var($email, FILTER_VALIDATE_EMAIL) && strpos($email, "@gmail.com") !== false) {
             // Prepare and execute the SQL statement to fetch user from the database
-            $stmt = $conn->prepare('SELECT * FROM logininfo WHERE email = ?');
+            $stmt = $conn->prepare('SELECT * FROM studenttable WHERE Email = ?');
             $stmt->bind_param('s', $email);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -35,8 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                 $user = $result->fetch_assoc();
 
                 // Verify the password
-                if (password_verify($password, $user['password'])) {
-                    // Password is correct, redirect to success page or perform other actions
+                if (password_verify($password, $user['Password'])) {
+                    // Password is correct, set session variables
+                    $_SESSION['user_id'] = $user['Reg_No']; // Assuming 'id' is the primary key
+                    $_SESSION['student_name'] = $user['Student Name'];
+                    $_SESSION['reg_no'] = $user['Reg_No'];
+                    $_SESSION['roll_no'] = $user['Roll_No'];
+
+                    // Redirect to student page
                     header('Location: studentpage.php');
                     exit();
                 } else {
@@ -59,3 +65,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         echo 'Email or password not provided';
     }
 }
+?>
