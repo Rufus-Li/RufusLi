@@ -1,6 +1,21 @@
 <?php
-    // Include the database connection file
-    include('connection.php');
+session_start();
+include('connection.php');
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo '<script>alert("Please log in first."); window.location.href = "login.php";</script>';
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch user details
+$stmt = $conn->prepare('SELECT * FROM studenttable WHERE Reg_No = ?');
+$stmt->bind_param('s', $user_id);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+
 ?>
 <html lang="en">
 <head>
@@ -118,7 +133,7 @@
                 <div class="name">
                     <a>
                         <div class="details">
-                         <h2><?php echo htmlspecialchars($user['Student Name']); ?></h2>
+                            <h2>NAME</h2> 
                             <h4>department</h4>
                             <h4>reg.no.</h4>
                             <h4>roll no.</h4>
@@ -142,7 +157,7 @@
             <input type="Roll" name="Roll" placeholder="Enter your Roll No." required><br>
         </div>
         <div class="edit-button">
-            <button onclick="confirm()">Confirm</button>
+            <button name="submit" onclick="confirm()">Confirm</button>
             <h1></h1>
             <button onclick="toggle()">Cancel</button>
             
