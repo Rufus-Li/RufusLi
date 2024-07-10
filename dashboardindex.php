@@ -1,9 +1,27 @@
+<?php
+session_start(); // Start session
+include('connection.php'); // Include your database connection file
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: adminlogin.php'); // Redirect to login page if not logged in
+    exit();
+}
+
+// Fetch user details from the session
+$user_id = $_SESSION['user_id'];
+$name = $_SESSION['Teacher_name'];
+$dept = $_SESSION['Department']; // Assuming this is set during login
+$reg_no = $_SESSION['reg_no'];
+$sem = $_SESSION['Sem']; // Assuming this is set during login
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dashboardstyle.css">
+    <link rel="stylesheet" href="dashboardcss.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Document</title>
@@ -33,7 +51,7 @@
             <div class="left-col">
                 <div class="navigate">
                     <div class="nav-item">
-                        <a href="dashboardindex.html" class="home-nav btn-primary">
+                        <a href="index.php" class="home-nav btn-primary">
                             <span class="material-symbols-outlined">home</span>
                         </a>
                     </div>
@@ -45,14 +63,14 @@
                         </button>
                     </div>
                     <div class="nav-item">
-                        <a href="searchstudent.html" class="search-nav btn-primary">
+                        <a href="searchstudent.php" class="search-nav btn-primary">
                             <span class="material-symbols-outlined">
                                 person_search
                             </span>
                         </a>
                     </div>
                     <div class="nav-item">
-                        <a href="adminindex.html" class="btn-primary">
+                        <a href="admin.php" class="btn-primary">
                             <span class="material-symbols-outlined">
                                 logout
                             </span>
@@ -69,10 +87,10 @@
                     <div class="name">
                         <a>
                             <div class="details">
-                                <h2>NAME</h2>
-                                <h4>department</h4>
-                                <h4>reg.no.</h4>
-                                <h4>roll no.</h4>
+                                <h2><?php echo htmlspecialchars($name); ?></h2>
+                                <h4><?php echo htmlspecialchars($dept); ?></h4>
+                                <h4><?php echo htmlspecialchars($reg_no); ?></h4>
+                                <h4><?php echo htmlspecialchars($sem); ?></h4>
                             </div>
                         </a>
                         <div class="edit-details">
@@ -84,19 +102,22 @@
         </div>
     </div>
     <div id="popup-edit-details">
-        <div class="edit-inputs">
-            <a>PROFILE</a> 
-            <input type="Name" name="Name" placeholder="Enter your Full Name" required><br>
-            <input type="Dept" name="Dept" placeholder="Enter your Department" required><br>
-            <input type="Subj" name="Subject" placeholder="Bachelor/Masters in **your subject**" required><br>
-            <input type="Reg-No" name="Reg-No" placeholder="Enter your Registration Number" required><br>
-            <input type="Roll" name="Roll" placeholder="Enter your Roll No." required><br>
-        </div>
-        <div class="edit-button">
-            <button onclick="confirm()">Confirm</button>
-            <h1></h1>
-            <button onclick="toggle()">Cancel</button>
-        </div>
+        <form id="edit-details-form" method="POST" action="adminedit.php">
+            <div class="edit-inputs">
+                <a>PROFILE</a> 
+                <input type="text" name="Name" placeholder="Enter your Full Name" required><br>
+                <input type="text" name="Dept" placeholder="Enter your Department" required><br>
+                <input type="text" name="Subject" placeholder="Bachelor/Masters in **your subject**" required><br>
+                <input type="text" name="Reg-No" placeholder="Enter your Registration Number" required><br>
+                <input type="text" name="sem" placeholder="Semester" required><br>
+            </div>
+            <div class="edit-button">
+                <button type="submit" name="submit">Confirm</button>
+                <h1></h1>
+                <button type="button" onclick="toggle()">Cancel</button>
+            </div>
+        </form>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="dashboardjs.js"></script>

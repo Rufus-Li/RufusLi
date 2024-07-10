@@ -52,7 +52,7 @@ $user = $stmt->get_result()->fetch_assoc();
             <div class="left-col">
                 <div class="navigate">
                     <div class="nav-item">
-                        <button onclick="window.location.href='front-page.php'" class="home-nav btn-primary">
+                        <button onclick="window.location.href='index.php'" class="home-nav btn-primary">
                             <span class="material-symbols-outlined">home</span>
                         </button>
                     </div>
@@ -127,16 +127,28 @@ $user = $stmt->get_result()->fetch_assoc();
                         </span>
                     </button>
                 </div>
+                <?php
+                    include 'connection.php';
+
+                    // Get current user registration number from session
+                    $current_reg_no = $_SESSION['reg_no'];
+
+                    // Fetch the student's information based on the logged-in user
+                    $sel = "SELECT * FROM studenttable WHERE `Reg_No` = '$current_reg_no'";
+                    $query = mysqli_query($conn, $sel);
+                    $result = mysqli_fetch_assoc($query);
+                     ?>
                 <div class="avatar-holder">
+
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile-pic">
                 </div>
                 <div class="name">
                     <a>
                         <div class="details">
-                            <h2>NAME</h2> 
-                            <h4>department</h4>
-                            <h4>reg.no.</h4>
-                            <h4>roll no.</h4>
+                            <h2><?php echo $result['Student Name']; ?></h2> 
+                            <h4><?php echo $result['Department']; ?></h4>
+                            <h4><?php echo $result['Reg_No']; ?></h4>
+                            <h4><?php echo $result['Roll_No']; ?></h4>
                         </div>
                     </a>
                     <div class="edit-details">

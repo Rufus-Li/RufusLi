@@ -1,17 +1,10 @@
 <?php
-// Include the database connection file
+session_start(); // Start session
 include('connection.php');
 
 // Function to check password strength
-function checkPasswordStrength($password)
-{
-    // Password strength can be assessed based on various criteria, such as length, presence of uppercase, lowercase, numbers, and special characters
-    // For simplicity, let's check if the password length is at least 8 characters
-    if (strlen($password) < 8) {
-        return "Weak"; // Password is considered weak if it's less than 8 characters
-    } else {
-        return "Strong"; // Password is considered strong otherwise
-    }
+function checkPasswordStrength($password) {
+    return strlen($password) >= 8 ? "Strong" : "Weak";
 }
 
 // Check if form is submitted
@@ -25,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         // Check if email is in a valid format
         if (filter_var($email, FILTER_VALIDATE_EMAIL) && strpos($email, "@gmail.com") !== false) {
             // Prepare and execute the SQL statement to fetch user from the database
-            $stmt = $conn->prepare('SELECT * FROM admininfo WHERE email = ?');
+            $stmt = $conn->prepare('SELECT * FROM teachertable WHERE Email = ?');
             $stmt->bind_param('s', $email);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -33,29 +26,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
             // Check if user exists
             if ($result->num_rows == 1) {
                 $user = $result->fetch_assoc();
-
-                // Verify the password
-                if (password_verify($password, $user['password'])) {
-                    // Password is correct, redirect to success page or perform other actions
+                if (password_verify($password, $user['Password'])) {
+                    $_SESSION['user_id'] = $user['TeacherID'];
+                    $_SESSION['Teacher_name'] = $user['TeacherName'];
+                    $_SESSION['Department'] = $user['Department']; // Set Department in session
+                    $_SESSION['reg_no'] = $user['TeacherID'];
+                    $_SESSION['Sem'] = $user['Semester'];
                     header('Location: dashboardindex.php');
                     exit();
                 } else {
                     // Password is incorrect
                     echo '<script>alert("Invalid password"); window.location.href = "admin.php";</script>';
-                    exit();
                 }
             } else {
                 // User does not exist
                 echo '<script>alert("User not found"); window.location.href = "admin.php";</script>';
-                exit();
             }
         } else {
             // Email is not in a valid format
             echo '<script>alert("Invalid email format or not a Gmail address"); window.location.href = "admin.php";</script>';
-            exit();
         }
     } else {
         // Email or password not provided
-        echo 'Email or password not provided';
+        echo '<script>alert("Email or password not provided"); window.location.href = "admin.php";</script>';
     }
 }
+?>

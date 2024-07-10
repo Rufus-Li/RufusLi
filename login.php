@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     $_SESSION['student_name'] = $user['Student Name'];
                     $_SESSION['reg_no'] = $user['Reg_No'];
                     $_SESSION['roll_no'] = $user['Roll_No'];
-
                     header('Location: studentpage.php');
                     exit();
                 } else {

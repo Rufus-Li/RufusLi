@@ -33,7 +33,7 @@
             <div class="left-col">
                 <div class="navigate">
                     <div class="nav-item">
-                        <a href="dashboardindex.html" class="home-nav btn-primary">
+                        <a href="dashboardindex.php" class="home-nav btn-primary">
                             <span class="material-symbols-outlined">home</span>
                         </a>
                     </div>
@@ -45,14 +45,14 @@
                         </button>
                     </div>
                     <div class="nav-item">
-                        <a href="searchstudent.html" class="search-nav btn-primary">
+                        <a href="searchstudent.php" class="search-nav btn-primary">
                             <span class="material-symbols-outlined">
                                 person_search
                             </span>
                         </a>
                     </div>
                     <div class="nav-item">
-                        <a href="adminindex.html" class="btn-primary">
+                        <a href="admin.php" class="btn-primary">
                             <span class="material-symbols-outlined">
                                 logout
                             </span>
