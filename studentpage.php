@@ -46,7 +46,7 @@ $user = $stmt->get_result()->fetch_assoc();
                 QR Code Attendance System 
             </div>
         </nav>
-    </div>  
+    </div> 
     <div class="container-fluid">
         <div class="row">
             <div class="left-col">
@@ -57,7 +57,7 @@ $user = $stmt->get_result()->fetch_assoc();
                         </button>
                     </div>
                     <div class="nav-item" >
-                        <a href="qr.php" class="btn-primary">
+                        <a href="https://scanapp.org" class="btn-primary">
                             <span class="material-symbols-outlined">
                                 qr_code_scanner
                             </span>
