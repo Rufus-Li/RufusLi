@@ -101,24 +101,52 @@ $user = $stmt->get_result()->fetch_assoc();
                             </select>
                         </div>
                     </div>
+
                     <div class="show-attendance">
                         <div class="at-box">
-                            <div class="subj s1">Subject 1
-                                <div class="bar bar1"></div>90%
-                            </div>
-                            <div class="subj s2">Subject 2
-                                <div class="bar bar2"></div>80%
-                            </div>
-                            <div class="subj s3">Subject 3
-                                <div class="bar bar3"></div>70%
-                            </div>
-                            <div class="subj s4">Subject 4
-                                <div class="bar bar4"></div>60%
-                            </div>
+                            <?php
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                    $roll_no = $_POST['roll_no'];
+                                    $semester = $_POST['semester'];
+
+                                    // Database connection
+                                    $conn = new mysqli("hostname", "username", "password", "database");
+
+                                    if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
+                                    }
+
+                                // Fetch attendance data
+                                $sql = "SELECT subject, 
+                                        COUNT(CASE WHEN attendance_status = 'present' THEN 1 END) AS present,
+                                        COUNT(CASE WHEN attendance_status = 'absent' THEN 1 END) AS absent
+                                        FROM attendance_table 
+                                        WHERE roll_no = ? AND semester = ?
+                                        GROUP BY subject";
+
+                                $stmt = $conn->prepare($sql);
+                                $stmt->bind_param("ii", $roll_no, $semester);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                while ($row = $result->fetch_assoc()) {
+                                    $total = $row['present'] + $row['absent'];
+                                    $attendance_percentage = $total ? ($row['present'] / $total) * 100 : 0;
+                                    $attendance_percentage = round($attendance_percentage, 2);
+
+                                echo "<div class='bar'>
+                                        <span style='width: {$attendance_percentage}%;'>{$row['subject']}: {$attendance_percentage}%</span>
+                                    </div>";
+                            }
+                            $stmt->close();
+                            $conn->close();
+                        }
+                        ?>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="card" id="card">
                 <div class="ds-top">
                     <button onclick="showPopUp()" class="cross">
@@ -167,6 +195,7 @@ $user = $stmt->get_result()->fetch_assoc();
             <input type="Subj" name="Subject" placeholder="Bachelor/Masters in **your subject**" required><br>
             <input type="Reg-No" name="Reg-No" placeholder="Enter your Registration Number" required><br>
             <input type="Roll" name="Roll" placeholder="Enter your Roll No." required><br>
+            <input type="Sem" name="sem" placeholder="Semester" required><br>
         </div>
         <div class="edit-button">
             <button name="submit" onclick="confirm()">Confirm</button>

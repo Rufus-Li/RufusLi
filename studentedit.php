@@ -15,13 +15,13 @@ if (isset($_POST['submit'])) {
     $subject = htmlspecialchars($_POST['Subject']);
     $reg_no = htmlspecialchars($_POST['Reg-No']);
     $roll_no = htmlspecialchars($_POST['Roll']);
-
+    $semester = htmlspecialchars($_POST['sem']);
     // Get current user registration number from session
     $current_reg_no = $_SESSION['reg_no'];
 
     // Update the student's information
-    $stmt = $conn->prepare('UPDATE studenttable SET `Student Name` = ?, `Department` = ?, `Subject` = ?, `Reg_No` = ?, `Roll_No` = ? WHERE `Reg_No` = ?');
-    $stmt->bind_param('ssssss', $name, $department, $subject, $reg_no, $roll_no, $current_reg_no);
+    $stmt = $conn->prepare('UPDATE studenttable SET `Student Name` = ?, `Department` = ?, `Subject` = ?, `Reg_No` = ?, `Roll_No` = ?,`Semester` = ? WHERE `Reg_No` = ?');
+    $stmt->bind_param('sssssss', $name, $department, $subject, $reg_no, $roll_no, $semester, $current_reg_no);
 
     // Execute the prepared statement
     if ($stmt->execute()) {

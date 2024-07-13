@@ -10,6 +10,3 @@ buttons.forEach(button => {
         button.classList.add('active');
     });
 });
-function confirm(){
-    //insert to finalise input details
-}

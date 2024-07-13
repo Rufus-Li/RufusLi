@@ -66,7 +66,7 @@ nav {
     }
 }
 
-nav,.navbar-brand,
+nav,
 .top-font{
     align-items: center;
     justify-content: center;
@@ -79,6 +79,7 @@ nav,.navbar-brand,
     height: 100%;
     width: 50%;
     display: flex;
+    align-items: center;
 }
 .top-font{
     display: flex;
@@ -134,7 +135,7 @@ nav,.navbar-brand,
 .at-de-dropdown{
     position: relative;
     min-width: 250px;
-    height: 8%;
+    height: 10%;
 }
 .select-box:hover{
     transition: .2s;
@@ -145,7 +146,34 @@ nav,.navbar-brand,
 .bar{
     font-family:'Times New Roman', Times, serif;
     font-style: italic;
+    background-color: #151515;
+    height: 20%;
 }
+.bar {
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.bar span {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    text-align: center;
+    background-color: #4caf50;
+    animation: bar-anima 1s;
+}
+
+.at-de-dropdown{
+    form{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .select-box{
     transition: .5s;
     appearance: none;
@@ -217,25 +245,7 @@ nav,.navbar-brand,
         height: 15%;
         background-color:rgba(72, 70, 70, 0.87);
         text-align: right;
-    }
-    .bar1{
-        width: 90%;
         animation: bar-anima 1s;
-    }  
-    .bar2{
-        width: 80%;
-        animation: bar-anima 1s;
-        animation-delay: .1s
-    }  
-    .bar3{
-        width: 70%;
-        animation: bar-anima 1s;
-        animation-delay: .2s
-    }  
-    .bar4{
-        width: 60%;
-        animation: bar-anima 1s;
-        animation-delay: .3s
     }  
 }
 @keyframes bar-anima {

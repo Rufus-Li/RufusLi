@@ -1,19 +1,19 @@
 <?php
-session_start(); // Start session
-include('connection.php'); // Include your database connection file
+session_start();
+include('connection.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: adminlogin.php'); // Redirect to login page if not logged in
+    header('Location: adminlogin.php');
     exit();
 }
 
 // Fetch user details from the session
 $user_id = $_SESSION['user_id'];
 $name = $_SESSION['Teacher_name'];
-$dept = $_SESSION['Department']; // Assuming this is set during login
+$dept = $_SESSION['Department'];
 $reg_no = $_SESSION['reg_no'];
-$sem = $_SESSION['Sem']; // Assuming this is set during login
+$sem = $_SESSION['Sem'];
 ?>
 
 <!DOCTYPE html>
@@ -37,12 +37,11 @@ $sem = $_SESSION['Sem']; // Assuming this is set during login
             <a href="https://salesiancollege.ac.in/">
                 <img src="https://salesiancollege.ac.in/Admission201819/Logo/logo.png" alt="Salesian College (Autonomous) Siliguri & Sonada" class="logo"/>
             </a>
+            Welcome <?php echo htmlspecialchars($name); ?>
         </div>
         <nav>
             <div class="navbar-brand">
-            </div>
-            <div class="top-font">
-                QR Code Attendance System
+                <div class="hm">QR Attendance System</div>
             </div>
         </nav>
     </div>  
@@ -56,7 +55,7 @@ $sem = $_SESSION['Sem']; // Assuming this is set during login
                         </a>
                     </div>
                     <div class="nav-item">
-                        <button id="generateQR" class="btn-primary">
+                        <button id="generateQRButton" class="btn-primary">
                             <span class="material-symbols-outlined">
                                 qr_code_scanner
                             </span>
@@ -87,12 +86,12 @@ $sem = $_SESSION['Sem']; // Assuming this is set during login
                     <div class="name">
                         <a>
                             <div class="details">
-                                <h2><?php echo htmlspecialchars($name); ?></h2>
-                                <h4><?php echo htmlspecialchars($dept); ?></h4>
-                                <h4><?php echo htmlspecialchars($reg_no); ?></h4>
-                                <h4><?php echo htmlspecialchars($sem); ?></h4>
+                                <h2><b>NAME </b><?php echo htmlspecialchars($name); ?></h2>
+                                <h4><b>DEPT </b><?php echo htmlspecialchars($dept); ?></h4>
+                                <h4><b>ROLL-NO </b><?php echo htmlspecialchars($reg_no); ?></h4>
                             </div>
                         </a>
+                        
                         <div class="edit-details">
                             <button onclick="toggle()">Edit</button>
                         </div>
@@ -111,11 +110,26 @@ $sem = $_SESSION['Sem']; // Assuming this is set during login
                 <input type="text" name="Reg-No" placeholder="Enter your Registration Number" required><br>
                 <input type="text" name="sem" placeholder="Semester" required><br>
             </div>
+            <br>
             <div class="edit-button">
                 <button type="submit" name="submit">Confirm</button>
                 <h1></h1>
                 <button type="button" onclick="toggle()">Cancel</button>
             </div>
+        </form>
+    </div>
+
+    <div id="generateQRForm" style="display:none;">
+        <form id="generateQRFormContent" method="POST">
+            <label for="subjectSelect">Select Subject:</label>
+            <select id="subjectSelect" name="subject" required>
+                <option value="">Select a subject</option>
+                <option value="subject1">Subject 1</option>
+                <option value="subject2">Subject 2</option>
+                <option value="subject3">Subject 3</option>
+                <option value="subject4">Subject 4</option>
+            </select>
+            <button type="button" id="generateQRButtonSubmit">Generate QR</button>
         </form>
     </div>
 
@@ -130,6 +144,28 @@ $sem = $_SESSION['Sem']; // Assuming this is set during login
             var fpopup=document.getElementById('card');
             fpopup.classList.toggle('active');
         }
+
+        $(document).ready(function(){
+        $('#generateQRButton').click(function() {
+            $('#generateQRForm').toggle();
+        });
+
+        $('#generateQRButtonSubmit').click(function() {
+            var subject = $('#subjectSelect').val();
+            if (subject) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'generate_qr.php',
+                    data: { subject: subject },
+                    success: function(response) {
+                        window.open('displayQR.php?data=' + encodeURIComponent(response), 'QR Code', 'width=400,height=400');
+                    }
+                });
+            } else {
+                alert('Please select a subject.');
+            }
+        });
+    });
     </script>
 </body>
 </html>

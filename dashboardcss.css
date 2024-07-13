@@ -18,9 +18,11 @@ body {
     width: 100%;
 }
 .logo-img{
+    color: #244b77;
     height:100%;
-    width: 15%;
+    width: 80%;
     padding-left:3%;
+    font-size: 1.5rem;
 }
 .logo-img a img{
     height:75%;
@@ -28,11 +30,10 @@ body {
     vertical-align: middle;
 }
 nav {
+    margin-left: 20%;
     height: 100%;
-    width: 100%;
-    max-width: 100%;
+    width:50%;
     color: #244b77;
-    display: flex;
     font-size:1.5rem ;
 }
 .bg {
@@ -368,6 +369,13 @@ button:hover {
     a{
         font-size: 2rem;
     }
+    form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
 }
 
 #popup-edit-details.active{
@@ -413,6 +421,9 @@ input{
 @media only screen and (max-width: 400px) {
     body{
         height: 91vh;
+    }
+    .logo-img{
+        font-size: 16px;
     }
     .card{
         width: 75%;
