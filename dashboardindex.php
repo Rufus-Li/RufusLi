@@ -91,7 +91,7 @@ $sem = $_SESSION['Sem'];
                                 <h4><b>ROLL-NO </b><?php echo htmlspecialchars($reg_no); ?></h4>
                             </div>
                         </a>
-                        
+                        <br>
                         <div class="edit-details">
                             <button onclick="toggle()">Edit</button>
                         </div>
@@ -106,9 +106,8 @@ $sem = $_SESSION['Sem'];
                 <a>PROFILE</a> 
                 <input type="text" name="Name" placeholder="Enter your Full Name" required><br>
                 <input type="text" name="Dept" placeholder="Enter your Department" required><br>
-                <input type="text" name="Subject" placeholder="Bachelor/Masters in **your subject**" required><br>
-                <input type="text" name="Reg-No" placeholder="Enter your Registration Number" required><br>
-                <input type="text" name="sem" placeholder="Semester" required><br>
+                <input type="text" name="Roll_No" placeholder="Enter your Roll Number" required><br>
+                <input type="text" name="Sem" placeholder="Semester" required><br>
             </div>
             <br>
             <div class="edit-button">

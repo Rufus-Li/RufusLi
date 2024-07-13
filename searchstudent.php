@@ -1,8 +1,6 @@
-
-
 <?php
-    session_start();
-    include('connection.php');
+session_start();
+include('connection.php');
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="searchstyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Document</title>
 </head>
 
@@ -27,8 +24,7 @@
     <div class="header-content">
         <div class="logo-img">
             <a href="https://salesiancollege.ac.in/">
-                <img src="https://salesiancollege.ac.in/Admission201819/Logo/logo.png"
-                    alt="Salesian College (Autonomous) Siliguri & Sonada" class="logo" />
+                <img src="https://salesiancollege.ac.in/Admission201819/Logo/logo.png" alt="Salesian College (Autonomous) Siliguri & Sonada" class="logo" />
             </a>
         </div>
         <nav>
@@ -74,12 +70,12 @@
             </div>
             <div class="right-col">
                 <div class="search-bar">
-                    <form action="">
+                    <form action="searchstudent.php" method="GET">
                         <select class="Select-Department" name="department" id="department">
                             <option value="">Select-Department</option>
-                            <option value="a1">B.Sc Computer Science</option>
-                            <option value="a2">BCA</option>
-                            <option value="a3">B.Sc Mathematics</option>
+                            <option value="B.Sc Computer Science">B.Sc Computer Science</option>
+                            <option value="BCA">BCA</option>
+                            <option value="B.Sc Mathematics">B.Sc Mathematics</option>
                         </select>
                         <div class="gap"></div>
                         <div class="grp">
@@ -92,15 +88,15 @@
                                 <option value="5">Semester 5</option>
                                 <option value="6">Semester 6</option>
                             </select>
-                            <select class="Subject" name=subject" id="subject">
+                            <select class="Subject" name="subject" id="subject">
                                 <option value="">Subject</option>
-                                <option value="s1">CC 1</option>
-                                <option value="s2">CC 2</option>
-                                <option value="s3">DSE 3</option>
-                                <option value="s4">DSE 4</option>
+                                <option value="CC 1">CC 1</option>
+                                <option value="CC 2">CC 2</option>
+                                <option value="DSE 3">DSE 3</option>
+                                <option value="DSE 4">DSE 4</option>
                             </select>
                             <div class="gap"></div>
-                            <button onclick="searchstudent()">Search</button>
+                            <button type="submit">Search</button>
                         </div>
                     </form>
                 </div>
@@ -115,33 +111,35 @@
                         </thead>
                         <tbody>
                             <?php
-                                // Get selected values
-                                $department = $_POST['department'];
-                                $semester = $_POST['semester'];
-                                $subject = $_POST['subject'];
+                                if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['department']) && isset($_GET['semester']) && isset($_GET['subject'])) {
+                                    // Get selected values
+                                    $department = $_GET['department'];
+                                    $semester = $_GET['semester'];
+                                    $subject = $_GET['subject'];
 
-                                // SQL query to fetch attendance
-                                $sql = "SELECT Roll_no, Student_Name, COUNT(*) `Attendance Status` 
-                                        FROM `attendance table` 
-                                        WHERE `Attendance Status` = 'Present' 
-                                        AND Department = ? 
-                                        AND Semester = ? 
-                                        AND SubjectName = ?
-                                        GROUP BY Roll_No., Student_Name";
+                                    // SQL query to fetch attendance
+                                    $sql = "SELECT `Roll_No.`, StudentName, COUNT(*) as classes_attended
+                                            FROM `attendance table` 
+                                            WHERE `Attendance Status` = 'Present' 
+                                            AND Department = ?
+                                            AND Semester = ? 
+                                            AND SubjectName = ?
+                                            GROUP BY `Roll_No.`, `StudentName`";
 
-                                // Prepare and bind
-                                $stmt = $conn->prepare($sql);
-                                $stmt->bind_param("ss", $department, $semester);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr>
-                                            <td>" . $row["roll_no"] . "</td>
-                                            <td>" . $row["name"] . "</td>
-                                            <td>" . $row["classes_attended"] . "</td>
-                                        </tr>";
+                                    // Prepare and bind
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->bind_param("sss", $department, $semester, $subject);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>
+                                                <td>" . htmlspecialchars($row["Roll_No."]) . "</td>
+                                                <td>" . htmlspecialchars($row["StudentName"]) . "</td>
+                                                <td>" . htmlspecialchars($row["classes_attended"]) . "</td>
+                                            </tr>";
+                                    }
+                                    $stmt->close();
                                 }
-                                $stmt->close();
                                 $conn->close();
                             ?>
                         </tbody>
@@ -149,7 +147,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- Correct script tag to include jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
